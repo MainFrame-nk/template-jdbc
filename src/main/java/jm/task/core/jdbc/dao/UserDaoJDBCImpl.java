@@ -13,24 +13,25 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        String sql = "CREATE TABLE Users (id long, name varchar(20), lastname varchar(20), age int)";
+        String sql = "CREATE TABLE IF NOT EXISTS Users (id long, name varchar(20), lastname varchar(20), age int)";
 
         try (Connection connection = Util.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql))
         {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("[WARNING] Таблица Users уже создана!");
         }
     }
 
     public void dropUsersTable() {
-        String sql = "DROP TABLE if exists Users";
+        String sql = "DROP TABLE IF EXISTS Users";
 
         try (Connection connection = Util.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql))
         {
             preparedStatement.executeUpdate();
+            System.out.println("Таблица Users удалена!");
         } catch (SQLException e) {
             System.out.println("[WARNING] Таблицы Users не существует!");
         }
@@ -52,6 +53,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
             preparedStatement.executeUpdate();
             connection.commit();
+            System.out.println("Пользователь добавлен!");
         } catch (SQLException e) {
             connection.rollback();
             e.printStackTrace();
@@ -68,6 +70,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             connection.commit();
+            System.out.println("Пользователь удалён!");
         } catch (SQLException e) {
             connection.rollback();
             e.printStackTrace();
@@ -110,6 +113,7 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.setAutoCommit(false);
             preparedStatement.executeUpdate();
             connection.commit();
+            System.out.println("Таблица Users очищена!");
         } catch (SQLException e) {
             connection.rollback();
             e.printStackTrace();
