@@ -82,12 +82,14 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
+        String sql = "SELECT id, name, lastName, age FROM users";
         List<User> userList = null;
         try {
             session.beginTransaction();
 
-            userList = session.createQuery("FROM User")
-                            .getResultList();
+            userList = session.createSQLQuery(sql)
+                    .addEntity(User.class)
+                    .getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -98,11 +100,11 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
-        String sql = "DELETE User Users";
+        String sql = "DELETE FROM Users";
         try {
             session.beginTransaction();
 
-            session.createQuery(sql).executeUpdate();
+            session.createSQLQuery(sql).executeUpdate();
 
             session.getTransaction().commit();
             System.out.println("Таблица Users очищена!");
