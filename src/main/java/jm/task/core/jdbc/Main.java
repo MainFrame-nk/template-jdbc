@@ -17,6 +17,10 @@ public class Main {
 
         Stream.of(service.getAllUsers()).forEach(System.out::println);
 
+        service.removeUserById(2);
+
+        Stream.of(service.getAllUsers()).forEach(System.out::println);
+
         service.cleanUsersTable();
 
         service.dropUsersTable();

@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="template-jdbc" target="17" />
+      <module name="template-jdbc" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
